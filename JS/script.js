@@ -39,6 +39,22 @@ function generateCell(content) {
     return cell;
 }
 
+//creo una funzione per generare dei nr casuali alle bombe
+function generateBombs(totCells, totalBombs) {
+    //array delle bombe
+    const bombs = [];
+
+    //ciclo per generare un nr casuale a ciascuna bomba
+    while (bombs.length < totalBombs) {
+        const randomNumbers = Math.floor(Math.random() * totCells) + 1;
+
+        /*condizione che verifica se il nr al interno del array bombe non sia stato ripetuto 
+        e in tal caso ne impedisce la repetizione*/
+        if (!bombs.includes(randomNumbers)) bombs.push(randomNumbers);
+    }
+    console.log(bombs)
+    return bombs
+}
 /* Fase di Elaborazione */
 
 /* 3. Generare il nr di celle desiderate usando un ciclo for e la funzione creata in precedenza
@@ -51,6 +67,10 @@ gameLevel.addEventListener('submit', function (event) {
     let col;
     //creo una variabile per tener conto del punteggio
     let score = 0;
+
+    //creo una variabile con il nr tottale di bombe
+    const totalBombs = 16;
+
 
 
     /* condizione che cambia il numero delle celle al cambio del livello di difficolta */
@@ -73,12 +93,15 @@ gameLevel.addEventListener('submit', function (event) {
     const totCells = rows * col;
     console.log(chooseLevel.value)
 
+    //genero il nr di bombe desiderato con la funzione
+    const bombs = generateBombs(totCells, totalBombs)
+
     for (let i = 1; i <= totCells; i++) {
 
         /* 4. inserire all'interno delle celle il suo numero 
         corrispondente che vanno i ordine dal 1 al 100 */
         const cell = generateCell(i);
-
+        console
         /* classe che cambia il nr dell celle in base al livello di difficolta */
         cell.classList.add(chooseLevel.value)
 
@@ -94,7 +117,6 @@ gameLevel.addEventListener('submit', function (event) {
 
             cell.classList.add('clicked');
             console.log(cell.innerText)
-
             //incremento il punteggio ogni click
             pointsCounter.innerText = ++score;
             console.log(score)
