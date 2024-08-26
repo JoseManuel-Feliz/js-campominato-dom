@@ -2,8 +2,7 @@ console.log('JS OK')
 
 /* 
 1. Recuperare gli elementi d'intresse dal DOM 
-    1b. Creo le variabile per creare il nr di righe e colonne desiderate 
-
+    1.b recupero l'emento dal DOM dove inserirò il punteggio contatore del punteggio
 
 2. creare una funzione per generare le celle
 
@@ -28,7 +27,8 @@ const Submit = document.getElementById('Play-btn');
 const chooseLevel = document.getElementById('Difficulty')
 const gameLevel = document.getElementById('pratofiorito')
 
-//1b. Creo le variabile per creare il nr di righe e colonne desiderate
+//1.b recupero l'emento dal DOM dove inserirò il punteggio contatore del punteggio
+const pointsCounter = document.getElementById('score-counter')
 
 //2. creare una funzione per generare le celle
 
@@ -46,9 +46,12 @@ ed inserirle al interno del elemento recuperato dal DOM */
 gameLevel.addEventListener('submit', function (event) {
     event.preventDefault()
 
-    grid.innerHTML = ''
+    grid.innerHTML = '';
     let rows;
     let col;
+    //creo una variabile per tener conto del punteggio
+    let score = 0;
+
 
     /* condizione che cambia il numero delle celle al cambio del livello di difficolta */
     switch (chooseLevel.value) {
@@ -84,8 +87,17 @@ gameLevel.addEventListener('submit', function (event) {
         della cella cliccata eppure cambi il background della cella. 
         */
         cell.addEventListener('click', function () {
+
+            /*condizione che impedisce al di incrementare 
+            il punteggio se la casella è stata gia cliccata*/
+            if (cell.classList.contains('clicked')) return;
+
             cell.classList.add('clicked');
             console.log(cell.innerText)
+
+            //incremento il punteggio ogni click
+            pointsCounter.innerText = ++score;
+            console.log(score)
         })
 
         grid.appendChild(cell)
