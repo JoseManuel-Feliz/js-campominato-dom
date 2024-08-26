@@ -115,11 +115,26 @@ gameLevel.addEventListener('submit', function (event) {
             il punteggio se la casella è stata gia cliccata*/
             if (cell.classList.contains('clicked')) return;
 
-            cell.classList.add('clicked');
-            console.log(cell.innerText)
-            //incremento il punteggio ogni click
-            pointsCounter.innerText = ++score;
-            console.log(score)
+            /*verifico se al click della cella trovo una bomba cioè 
+            se il nr della cella corrisponde a uno dei nr all'interno del array bombe*/
+            if (bombs.includes(i)) {
+
+                //svuoto la cell cioè rimuovo il testo/contenuto
+                cell.innerText = ''
+                //stampo in console un messagio appropiato
+                console.log('GAME OVER hai trovato un mina')
+                console.log(`your score is: ${score}`)
+
+                //aggiungo la classe bomb
+                cell.classList.add('bomb')
+            } else {
+                cell.classList.add('clicked');
+                console.log(cell.innerText)
+
+                //incremento il punteggio a ogni click
+                pointsCounter.innerText = ++score;
+                console.log(score)
+            }
         })
 
         grid.appendChild(cell)

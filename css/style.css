@@ -109,3 +109,9 @@ a {
     height: calc(100% / 10);
     flex-basis: calc(100% / 10);
 }
+
+.bomb {
+    background: url(../img/bomb.png) 0 0/ contain no-repeat;
+    background-color: #FF150D;
+
+}
