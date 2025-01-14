@@ -113,5 +113,21 @@ a {
 .bomb {
     background: url(../img/bomb.png) 0 0/ contain no-repeat;
     background-color: #FF150D;
+}
 
+
+#endgame {
+    text-shadow: 1px 1px 1px black;
+    z-index: 1;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    color: #ff0000;
+
+}
+
+main {
+    position: relative;
+    /*  filter: brightness(0.6); */
 }

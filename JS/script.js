@@ -27,6 +27,7 @@ const Submit = document.getElementById('Play-btn');
 const chooseLevel = document.getElementById('Difficulty')
 const gameLevel = document.getElementById('pratofiorito')
 
+const endGameMessage = document.getElementById('endgame')
 //1.b recupero l'emento dal DOM dove inserirò il punteggio contatore del punteggio
 const pointsCounter = document.getElementById('score-counter')
 
@@ -91,17 +92,20 @@ gameLevel.addEventListener('submit', function (event) {
     }
 
     const totCells = rows * col;
-    console.log(chooseLevel.value)
+
+    //creo una variabile che verifica il puntegio totalizzato  
+    const maxScore = totCells - totalBombs;
+
+    console.log(chooseLevel.value);
 
     //genero il nr di bombe desiderato con la funzione
-    const bombs = generateBombs(totCells, totalBombs)
+    const bombs = generateBombs(totCells, totalBombs);
 
     for (let i = 1; i <= totCells; i++) {
 
         /* 4. inserire all'interno delle celle il suo numero 
         corrispondente che vanno i ordine dal 1 al 100 */
         const cell = generateCell(i);
-        console
         /* classe che cambia il nr dell celle in base al livello di difficolta */
         cell.classList.add(chooseLevel.value)
 
@@ -109,31 +113,35 @@ gameLevel.addEventListener('submit', function (event) {
         /*  5.  Creare un evento che al click aggiunga in console il numero 
         della cella cliccata eppure cambi il background della cella. 
         */
-        cell.addEventListener('click', function () {
+        cell.addEventListener('click', event => {
 
             /*condizione che impedisce al di incrementare 
             il punteggio se la casella è stata gia cliccata*/
             if (cell.classList.contains('clicked')) return;
 
+            //aggiungo la classe clicked al click della della cella
+            cell.classList.add('clicked');
+
             /*verifico se al click della cella trovo una bomba cioè 
             se il nr della cella corrisponde a uno dei nr all'interno del array bombe*/
-            if (bombs.includes(i)) {
+            const isBomb = bombs.includes(parseInt(event.target.innerText));
+
+            if (isBomb) {
 
                 //svuoto la cell cioè rimuovo il testo/contenuto
                 cell.innerText = ''
                 //stampo in console un messagio appropiato
                 console.log('GAME OVER hai trovato un mina')
                 console.log(`your score is: ${score}`)
-
+                endGameMessage.innerHTML = (`GAME OVER hai trovato un mina <br> your score is: ${score}`)
                 //aggiungo la classe bomb
                 cell.classList.add('bomb')
             } else {
-                cell.classList.add('clicked');
                 console.log(cell.innerText)
-
                 //incremento il punteggio a ogni click
                 pointsCounter.innerText = ++score;
                 console.log(score)
+                if (score === maxScore) console.log(`you win, you score is: ${score}`)
             }
         })
 
